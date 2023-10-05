@@ -1,12 +1,15 @@
-﻿namespace Velocity.Contracts.Services;
+﻿using static Velocity.Services.AlwaysOnTopService;
+
+namespace Velocity.Contracts.Services;
 
 public interface IAlwaysOnTopService
 {
-    bool IsAlwaysOnTop
+    AlwaysOnTop IsAlwaysOnTop
     {
         get;
     }
-    Task SetAlwaysOnTopAsync(bool value);
+    Task SetAlwaysOnTopAsync(AlwaysOnTop value);
+    Task InitializeAlwaysOnTop();
     event Action AlwaysOnTopChanged;
     Task InitializeAsync();
 

@@ -25,13 +25,4 @@ public sealed partial class SettingsPage : Page
         _localSettingsService.OpenSettings();
     }
 
-    private void EnableAlwaysOnTop(object sender, RoutedEventArgs e)
-    {
-        ViewModel.SwitchAlwaysOnTopCommand.Execute(true);
-    }
-
-    private void DisableAlwaysOnTop(object sender, RoutedEventArgs e)
-    {
-        ViewModel.SwitchAlwaysOnTopCommand.Execute(false);
-    }
 }

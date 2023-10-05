@@ -2,7 +2,6 @@
 using Velocity.Contracts.Services;
 using Velocity.Helpers;
 using static Velocity.Models.LogEvent;
-
 namespace Velocity.Services;
 
 public class AlwaysOnTopService : IAlwaysOnTopService
@@ -18,7 +17,7 @@ public class AlwaysOnTopService : IAlwaysOnTopService
         _localSettingsService = localSettingsService;
     }
 
-    public bool IsAlwaysOnTop
+    public AlwaysOnTop IsAlwaysOnTop
     {
         get;
         private set;
@@ -27,20 +26,27 @@ public class AlwaysOnTopService : IAlwaysOnTopService
     public async Task InitializeAsync()
     {
         IsAlwaysOnTop = await LoadAlwaysOnTopFromSettingsAsync();
-        App.MainWindow.IsAlwaysOnTop = IsAlwaysOnTop;
+        await Task.CompletedTask;
     }
 
-    private async Task SaveAlwaysOnTopInSettings(bool value)
+    private async Task SaveAlwaysOnTopInSettings(AlwaysOnTop value)
     {
-        await _localSettingsService.SaveSettingAsync(SettingsKey, value);
+        await _localSettingsService.SaveSettingAsync(SettingsKey, value.ToString());
     }
 
-    private async Task<bool> LoadAlwaysOnTopFromSettingsAsync()
+    private async Task<AlwaysOnTop> LoadAlwaysOnTopFromSettingsAsync()
     {
-        return await _localSettingsService.ReadSettingAsync<bool>(SettingsKey);
+        var alwaysOnTop = await _localSettingsService.ReadSettingAsync<string>(SettingsKey);
+        return Enum.TryParse(alwaysOnTop, out AlwaysOnTop alwaysOnTopResult) ? alwaysOnTopResult : AlwaysOnTop.Disabled;
     }
 
-    public async Task SetAlwaysOnTopAsync(bool value)
+    public async Task InitializeAlwaysOnTop()
+    {
+        var alwaysOnTop = await LoadAlwaysOnTopFromSettingsAsync();
+        await SetAlwaysOnTopAsync(alwaysOnTop);
+    }
+
+    public async Task SetAlwaysOnTopAsync(AlwaysOnTop value)
     {
         if (IsAlwaysOnTop == value)
         {
@@ -48,11 +54,20 @@ public class AlwaysOnTopService : IAlwaysOnTopService
         }
 
         IsAlwaysOnTop = value;
-        App.MainWindow.IsAlwaysOnTop = value;
+        App.MainWindow.IsAlwaysOnTop = value switch
+        {
+            AlwaysOnTop.Enabled => true,
+            AlwaysOnTop.Disabled => false,
+            _ => App.MainWindow.IsAlwaysOnTop
+        };
         AlwaysOnTopChanged?.Invoke();
         await SaveAlwaysOnTopInSettings(value);
-
         await LogExtension.Log(Logger, LogLevel.Info, $"Always On Top set to {value}", EventIds.DebugInformation, null);
     }
 
+    public enum AlwaysOnTop
+    {
+        Enabled,
+        Disabled
+    }
 }

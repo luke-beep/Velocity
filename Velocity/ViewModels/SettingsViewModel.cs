@@ -7,6 +7,7 @@ using CommunityToolkit.Mvvm.Input;
 using Microsoft.UI.Xaml;
 using Velocity.Contracts.Services;
 using Velocity.Helpers;
+using static Velocity.Services.AlwaysOnTopService;
 using static Velocity.Services.BackdropSelectorService;
 using static Velocity.Services.DefaultPageService;
 
@@ -28,6 +29,9 @@ public partial class SettingsViewModel : ObservableRecipient
     public BackdropType MicaAlt => BackdropType.MicaAlt;
     public BackdropType DesktopAcrylic => BackdropType.DesktopAcrylic;
 
+    public AlwaysOnTop AlwaysOnTopEnabled => AlwaysOnTop.Enabled;
+    public AlwaysOnTop AlwaysOnTopDisabled => AlwaysOnTop.Disabled;
+
     public PageType Home => PageType.Home;
     public PageType Tweaks => PageType.Tweaks;
     public PageType Games => PageType.Games;
@@ -42,7 +46,7 @@ public partial class SettingsViewModel : ObservableRecipient
     [ObservableProperty] private ElementTheme _elementTheme;
     [ObservableProperty] private BackdropType _backDrop;
     [ObservableProperty] private PageType _defaultPage;
-    [ObservableProperty] private bool _alwaysOnTop;
+    [ObservableProperty] private AlwaysOnTop _alwaysOnTop;
     [ObservableProperty] private string _versionDescription;
 
     public ICommand SwitchThemeCommand
@@ -80,9 +84,6 @@ public partial class SettingsViewModel : ObservableRecipient
         get;
     }
 
-
-
-
     public string CurrentTheme => _themeSelectorService.Theme.ToString();
     public string CurrentBackdrop => _backdropSelectorService.Backdrop.ToString();
     public string CurrentDefaultPage => _defaultPageService.DefaultPage.ToString();
@@ -111,7 +112,7 @@ public partial class SettingsViewModel : ObservableRecipient
         SwitchThemeCommand = new RelayCommand<ElementTheme>(ChangeTheme);
         SwitchBackdropCommand = new RelayCommand<BackdropType>(ChangeBackdrop);
         SwitchDefaultPageCommand = new RelayCommand<PageType>(ChangeDefaultPage);
-        SwitchAlwaysOnTopCommand = new RelayCommand<bool>(ChangeAlwaysOnTop);
+        SwitchAlwaysOnTopCommand = new RelayCommand<AlwaysOnTop>(ChangeAlwaysOnTop);
         OpenSettingsFolderCommand = new RelayCommand(OpenSettings);
         OpenGitHubCommand = new RelayCommand(OpenGitHub);
         OpenLicenseCommand = new RelayCommand(OpenLicense);
@@ -158,7 +159,7 @@ public partial class SettingsViewModel : ObservableRecipient
         DefaultPage = pageType;
     }
 
-    private async void ChangeAlwaysOnTop(bool param)
+    private async void ChangeAlwaysOnTop(AlwaysOnTop param)
     {
         if (AlwaysOnTop == param)
         {

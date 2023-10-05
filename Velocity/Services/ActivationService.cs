@@ -72,12 +72,14 @@ public class ActivationService : IActivationService
         await _backdropSelectorService.InitializeAsync().ConfigureAwait(false);
         await _defaultPageService.InitializeAsync().ConfigureAwait(false);
         await _logService.InitializeAsync().ConfigureAwait(false);
+        await _alwaysOnTopService.InitializeAsync().ConfigureAwait(false);
         await Task.CompletedTask;
     }
 
     private async Task StartupAsync()
     {
         await _themeSelectorService.SetRequestedThemeAsync();
+        await _alwaysOnTopService.InitializeAlwaysOnTop();
         await LogExtension.Log(_logger, LogLevel.Info, "Application started.", LogEvent.EventIds.Startup, null);
         await Task.CompletedTask;
     }

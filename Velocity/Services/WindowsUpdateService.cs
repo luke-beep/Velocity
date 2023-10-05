@@ -69,22 +69,26 @@ public class WindowsUpdateService : IWindowsUpdateService
         {
             LogExtension.Log(Logger, LogLevel.Info, $"Downloading {update.Title}", LogEvent.EventIds.UpdateDownloadStarted, null);
             dynamic updatesToDownload = Activator.CreateInstance(Type.GetTypeFromProgID("Microsoft.Update.UpdateColl"));
-            if (updatesToDownload != null)
+            if (updatesToDownload == null)
             {
-                updatesToDownload.Add(update);
-                if (_updateSession != null)
-                {
-                    var downloader = _updateSession.CreateUpdateDownloader();
-                    downloader.Updates = updatesToDownload;
-                    var downloadResult = downloader.Download();
-
-                    if (downloadResult.ResultCode != 2)
-                    {
-                        LogExtension.Log(Logger, LogLevel.Error, $"Download failed with result code: {downloadResult.ResultCode}", LogEvent.EventIds.UpdateDownloadFailed, null);
-                    }
-                    LogExtension.Log(Logger, LogLevel.Info, $"Successfully downloaded {update.Title} with result code: {downloadResult.ResultCode}", LogEvent.EventIds.UpdateDownloadCompleted, null);
-                }
+                return;
             }
+
+            updatesToDownload.Add(update);
+            if (_updateSession == null)
+            {
+                return;
+            }
+
+            var downloader = _updateSession.CreateUpdateDownloader();
+            downloader.Updates = updatesToDownload;
+            var downloadResult = downloader.Download();
+
+            if (downloadResult.ResultCode != 2)
+            {
+                LogExtension.Log(Logger, LogLevel.Error, $"Download failed with result code: {downloadResult.ResultCode}", LogEvent.EventIds.UpdateDownloadFailed, null);
+            }
+            LogExtension.Log(Logger, LogLevel.Info, $"Successfully downloaded {update.Title} with result code: {downloadResult.ResultCode}", LogEvent.EventIds.UpdateDownloadCompleted, null);
         });
     }
 
@@ -94,22 +98,26 @@ public class WindowsUpdateService : IWindowsUpdateService
         {
             LogExtension.Log(Logger, LogLevel.Info, $"Installing {update.Title}", LogEvent.EventIds.UpdateInstallStarted, null);
             dynamic updatesToInstall = Activator.CreateInstance(Type.GetTypeFromProgID("Microsoft.Update.UpdateColl") ?? throw new InvalidOperationException()) ?? throw new InvalidOperationException();
-            if (updatesToInstall != null)
+            if (updatesToInstall == null)
             {
-                updatesToInstall.Add(update);
-                if (_updateSession != null)
-                {
-                    var installer = _updateSession.CreateUpdateInstaller();
-                    installer.Updates = updatesToInstall;
-                    var installResult = installer.Install();
-
-                    if (installResult.ResultCode != 2)
-                    {
-                        LogExtension.Log(Logger, LogLevel.Error, $"Install failed with result code: {installResult.ResultCode}", LogEvent.EventIds.UpdateInstallFailed, null);
-                    }
-                    LogExtension.Log(Logger, LogLevel.Info, $"Successfully installed {update.Title} with result code: {installResult.ResultCode}", LogEvent.EventIds.UpdateInstallCompleted, null);
-                }
+                return;
             }
+
+            updatesToInstall.Add(update);
+            if (_updateSession == null)
+            {
+                return;
+            }
+
+            var installer = _updateSession.CreateUpdateInstaller();
+            installer.Updates = updatesToInstall;
+            var installResult = installer.Install();
+
+            if (installResult.ResultCode != 2)
+            {
+                LogExtension.Log(Logger, LogLevel.Error, $"Install failed with result code: {installResult.ResultCode}", LogEvent.EventIds.UpdateInstallFailed, null);
+            }
+            LogExtension.Log(Logger, LogLevel.Info, $"Successfully installed {update.Title} with result code: {installResult.ResultCode}", LogEvent.EventIds.UpdateInstallCompleted, null);
         });
     }
 }

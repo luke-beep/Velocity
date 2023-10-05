@@ -287,10 +287,28 @@
                                     Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}" />
                             </StackPanel>
                         </StackPanel>
-                        <ToggleButton
-                            Checked="EnableAlwaysOnTop"
-                            IsChecked="{x:Bind ViewModel.AlwaysOnTop, Mode=TwoWay}"
-                            Unchecked="DisableAlwaysOnTop" />
+                        <DropDownButton
+                            Width="125"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Center"
+                            HorizontalContentAlignment="Left"
+                            Content="{x:Bind ViewModel.CurrentAlwaysOnTop, Mode=OneWay}"
+                            FontSize="15">
+                            <DropDownButton.Flyout>
+                                <MenuFlyout Placement="Bottom">
+                                    <MenuFlyoutItem
+                                        Command="{x:Bind ViewModel.SwitchAlwaysOnTopCommand}"
+                                        CommandParameter="{x:Bind ViewModel.AlwaysOnTopEnabled}"
+                                        FontSize="15"
+                                        Text="Enabled" />
+                                    <MenuFlyoutItem
+                                        Command="{x:Bind ViewModel.SwitchAlwaysOnTopCommand}"
+                                        CommandParameter="{x:Bind ViewModel.AlwaysOnTopDisabled}"
+                                        FontSize="15"
+                                        Text="Disabled" />
+                                </MenuFlyout>
+                            </DropDownButton.Flyout>
+                        </DropDownButton>
                     </controls:DockPanel>
                 </Border>
             </Button>
