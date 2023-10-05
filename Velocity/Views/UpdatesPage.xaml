@@ -1,0 +1,101 @@
+﻿<Page
+    x:Class="Velocity.Views.UpdatesPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:CommunityToolkit.WinUI.UI.Controls"
+    xmlns:views="using:Velocity.Views"
+    xmlns:behaviors="using:Velocity.Behaviors"
+    xmlns:models="using:Velocity.Models"
+    mc:Ignorable="d">
+	<Page.Resources>
+		<DataTemplate x:Key="ItemTemplate" x:DataType="models:WindowsUpdate">
+			<Grid Height="60">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="Auto" />
+					<ColumnDefinition Width="*" />
+				</Grid.ColumnDefinitions>
+				<StackPanel
+                    Grid.Column="1"
+                    Margin="{StaticResource SmallLeftMargin}"
+                    VerticalAlignment="Center">
+					<TextBlock Text="{x:Bind Title}" Style="{StaticResource ListTitleStyle}" />
+					<TextBlock Text="{x:Bind Description}" Style="{StaticResource ListSubTitleStyle}" />
+				</StackPanel>
+			</Grid>
+		</DataTemplate>
+
+		<DataTemplate x:Key="DetailsTemplate">
+			<Grid>
+				<views:UpdatesDetailControl WindowsUpdate="{Binding}" />
+			</Grid>
+		</DataTemplate>
+
+		<DataTemplate x:Key="NoSelectionContentTemplate">
+			<Grid>
+				<TextBlock
+                    x:Uid="Updates_NoSelection"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    TextAlignment="Center"
+                    Style="{ThemeResource SubtitleTextBlockStyle}" />
+			</Grid>
+		</DataTemplate>
+
+		<DataTemplate x:Key="ListHeaderTemplate">
+			<Grid Height="40">
+				<TextBlock
+                    VerticalAlignment="Center"
+                    Style="{StaticResource ListTitleStyle}"
+                    Text="{Binding}" />
+			</Grid>
+		</DataTemplate>
+		<DataTemplate x:Key="MinimalListHeaderTemplate">
+			<Grid Height="40">
+				<TextBlock
+                    Margin="96,0,0,0"
+                    VerticalAlignment="Center"
+                    Style="{StaticResource ListTitleStyle}"
+                    Text="{Binding}" />
+			</Grid>
+		</DataTemplate>
+	</Page.Resources>
+
+	<Grid x:Name="ContentArea">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="*" />
+		</Grid.RowDefinitions>
+		
+		<VisualStateManager.VisualStateGroups>
+			<VisualStateGroup>
+				<VisualState>
+					<VisualState.StateTriggers>
+						<!--641 is the default CompactModeThresholdWidth in NavigationView -->
+						<AdaptiveTrigger MinWindowWidth="641" />
+					</VisualState.StateTriggers>
+					<VisualState.Setters>
+						<Setter Target="ListDetailsViewControl.ListHeaderTemplate" Value="{StaticResource ListHeaderTemplate}" />
+					</VisualState.Setters>
+				</VisualState>
+			</VisualStateGroup>
+		</VisualStateManager.VisualStateGroups>
+		<Button Content="Scan for Updates" Click="ScanButton_Click" />
+        <Button Grid.Row="0" HorizontalAlignment="Right" Content="Install Selected Update" Click="DownloadAndInstallButton_Click"/>
+		<controls:ListDetailsView
+            Grid.Row="1"
+            x:Uid="Updates"
+            x:Name="ListDetailsViewControl"
+            BackButtonBehavior="Manual"
+            Background="Transparent"
+            BorderBrush="Transparent"
+            DetailsTemplate="{StaticResource DetailsTemplate}"
+            ItemsSource="{x:Bind ViewModel.AvailableUpdates}"
+            ItemTemplate="{StaticResource ItemTemplate}"
+            ListHeaderTemplate="{StaticResource MinimalListHeaderTemplate}"
+            NoSelectionContentTemplate="{StaticResource NoSelectionContentTemplate}"
+            SelectedItem="{x:Bind ViewModel.Selected, Mode=TwoWay}"
+            ViewStateChanged="OnViewStateChanged"/>
+	</Grid>
+</Page>

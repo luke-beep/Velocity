@@ -1,0 +1,221 @@
+﻿<Page
+    x:Class="Velocity.Views.ShellPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:behaviors="using:Velocity.Behaviors"
+    xmlns:behaviors1="using:Microsoft.Xaml.Interactions.Core"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:helpers="using:Velocity.Helpers"
+    xmlns:i="using:Microsoft.Xaml.Interactivity"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Loaded="OnLoaded">
+
+    <Grid>
+        <Grid
+            x:Name="AppTitleBar"
+            Height="{Binding ElementName=NavigationViewControl, Path=CompactPaneLength}"
+            VerticalAlignment="Top"
+            Canvas.ZIndex="1"
+            IsHitTestVisible="True">
+            <Image
+                Width="16"
+                Height="16"
+                HorizontalAlignment="Left"
+                Opacity="1"
+                Source="/Assets/WindowIcon.ico"
+                Visibility="Visible" />
+            <TextBlock
+                x:Name="AppTitleBarText"
+                Margin="28,0,0,0"
+                VerticalAlignment="Center"
+                Style="{StaticResource CaptionTextBlockStyle}"
+                TextWrapping="NoWrap" />
+        </Grid>
+        <Button
+            x:Name="ButtonWithTeachingTip"
+            Width="0"
+            Height="0"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Background="Transparent"
+            BorderThickness="0" />
+
+        <TeachingTip
+            x:Name="InitialTip"
+            x:Uid="InitialTip"
+            ActionButtonClick="GoNextAlt"
+            CloseButtonClick="Skip"
+            Target="{x:Bind ButtonWithTeachingTip}" />
+
+        <TeachingTip
+            x:Name="HomeTip"
+            x:Uid="HomeTip"
+            ActionButtonClick="GoNext"
+            CloseButtonClick="GoToInitialTip"
+            Target="{x:Bind Home}" />
+
+        <TeachingTip
+            x:Name="TweaksTip"
+            x:Uid="TweaksTip"
+            ActionButtonClick="GoNext"
+            CloseButtonClick="GoBack"
+            Target="{x:Bind Tweaks}" />
+
+        <TeachingTip
+            x:Name="GamesTip"
+            x:Uid="GamesTip"
+            ActionButtonClick="GoNext"
+            CloseButtonClick="GoBack"
+            Target="{x:Bind Games}" />
+
+        <TeachingTip
+            x:Name="AppsTip"
+            x:Uid="AppsTip"
+            ActionButtonClick="GoNext"
+            CloseButtonClick="GoBack"
+            Target="{x:Bind Apps}" />
+
+        <TeachingTip
+            x:Name="HealthTip"
+            x:Uid="HealthTip"
+            ActionButtonClick="GoNext"
+            CloseButtonClick="GoBack"
+            Target="{x:Bind Health}" />
+
+        <TeachingTip
+            x:Name="UpdatesTip"
+            x:Uid="UpdatesTip"
+            ActionButtonClick="GoNext"
+            CloseButtonClick="GoBack"
+            Target="{x:Bind Updates}" />
+
+        <TeachingTip
+            x:Name="ServicesTip"
+            x:Uid="ServicesTip"
+            ActionButtonClick="GoNext"
+            CloseButtonClick="GoBack"
+            Target="{x:Bind Services}" />
+
+        <TeachingTip
+            x:Name="DebugTip"
+            x:Uid="DebugTip"
+            ActionButtonClick="GoNextNoNav"
+            CloseButtonClick="GoBack"
+            Target="{x:Bind Debug}" />
+
+        <TeachingTip
+            x:Name="SettingsTip"
+            x:Uid="SettingsTip"
+            ActionButtonClick="GoToEnd"
+            CloseButtonClick="GoBackNoNav"
+            Target="{x:Bind Settings}" />
+
+        <TeachingTip
+            x:Name="EndTip"
+            x:Uid="EndTip"
+            ActionButtonClick="Finish"
+            CloseButtonClick="GoToSettings"
+            Target="{x:Bind ButtonWithTeachingTip}" />
+
+        <Grid
+            x:Name="AppOverlayGrid"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Stretch"
+            Background="#FF121212"
+            Canvas.ZIndex="1"
+            Opacity="0.75"
+            Visibility="Collapsed" />
+
+        <NavigationView
+            x:Name="NavigationViewControl"
+            Canvas.ZIndex="0"
+            DisplayModeChanged="NavigationViewControl_DisplayModeChanged"
+            ExpandedModeThresholdWidth="1280"
+            IsBackButtonVisible="Visible"
+            IsBackEnabled="{x:Bind ViewModel.IsBackEnabled, Mode=OneWay}"
+            IsSettingsVisible="False"
+            SelectedItem="{x:Bind ViewModel.Selected, Mode=OneWay}">
+            <NavigationView.MenuItems>
+                <NavigationViewItem
+                    x:Name="Home"
+                    x:Uid="Shell_Home"
+                    helpers:NavigationHelper.NavigateTo="Velocity.ViewModels.HomeViewModel">
+                    <NavigationViewItem.Icon>
+                        <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xe80f;" />
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+                <NavigationViewItem
+                    x:Name="Tweaks"
+                    x:Uid="Shell_Tweaks"
+                    helpers:NavigationHelper.NavigateTo="Velocity.ViewModels.TweaksViewModel">
+                    <NavigationViewItem.Icon>
+                        <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xe90f;" />
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+                <NavigationViewItem
+                    x:Name="Games"
+                    x:Uid="Shell_Games"
+                    helpers:NavigationHelper.NavigateTo="Velocity.ViewModels.GamesViewModel">
+                    <NavigationViewItem.Icon>
+                        <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xe7fc;" />
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+                <NavigationViewItem
+                    x:Name="Apps"
+                    x:Uid="Shell_Apps"
+                    helpers:NavigationHelper.NavigateTo="Velocity.ViewModels.AppsViewModel">
+                    <NavigationViewItem.Icon>
+                        <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xe71d;" />
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+                <NavigationViewItem
+                    x:Name="Health"
+                    x:Uid="Shell_Health"
+                    helpers:NavigationHelper.NavigateTo="Velocity.ViewModels.HealthViewModel">
+                    <NavigationViewItem.Icon>
+                        <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xea92;" />
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+                <NavigationViewItem
+                    x:Name="Updates"
+                    x:Uid="Shell_Updates"
+                    helpers:NavigationHelper.NavigateTo="Velocity.ViewModels.UpdatesViewModel">
+                    <NavigationViewItem.Icon>
+                        <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xe777;" />
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+                <NavigationViewItem
+                    x:Name="Services"
+                    x:Uid="Shell_Services"
+                    helpers:NavigationHelper.NavigateTo="Velocity.ViewModels.ServicesViewModel">
+                    <NavigationViewItem.Icon>
+                        <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xea86;" />
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+                <NavigationViewItem
+                    x:Name="Debug"
+                    x:Uid="Shell_Debug"
+                    helpers:NavigationHelper.NavigateTo="Velocity.ViewModels.DebugViewModel">
+                    <NavigationViewItem.Icon>
+                        <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xebe8;" />
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+            </NavigationView.MenuItems>
+            <NavigationView.FooterMenuItems>
+                <NavigationViewItemSeparator BorderThickness="0" />
+                <NavigationViewItem
+                    x:Name="Settings"
+                    x:Uid="Shell_Settings"
+                    helpers:NavigationHelper.NavigateTo="Velocity.ViewModels.SettingsViewModel">
+                    <NavigationViewItem.Icon>
+                        <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE713;" />
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+            </NavigationView.FooterMenuItems>
+            <Grid Margin="{StaticResource NavigationViewPageContentMargin}">
+                <Frame x:Name="NavigationFrame" />
+            </Grid>
+        </NavigationView>
+
+    </Grid>
+</Page>

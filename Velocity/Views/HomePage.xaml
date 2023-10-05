@@ -1,0 +1,118 @@
+﻿<Page
+    x:Class="Velocity.Views.HomePage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:CommunityToolkit.WinUI.UI.Controls"
+    mc:Ignorable="d">
+
+    <Grid x:Name="ContentArea">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+
+            <Border Grid.Row="0" Grid.Column="1"
+                    Background="Transparent"
+                    BorderBrush="Transparent"
+                    Padding="5"
+                    Margin="8, 0, 0, 0"
+                    BorderThickness="1"
+                    CornerRadius="4"
+                    VerticalAlignment="Top"
+                    HorizontalAlignment="Stretch">
+                <controls:DockPanel LastChildFill="True">
+                    <StackPanel Orientation="Horizontal" controls:DockPanel.Dock="Left">
+                        <PersonPicture x:Name="UserProfilePicture" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5, 0, 5, 0" />
+                        <StackPanel Orientation="Vertical" VerticalAlignment="Center">
+                            <TextBlock VerticalAlignment="Center" Text="Hello User" Margin="10,0,0,0"/>
+                        <TextBlock VerticalAlignment="Center" x:Name="UserProfileName" Margin="10,0,0,0"
+                                       Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"
+                                       FontSize="12"/>
+                        </StackPanel>
+                    </StackPanel>
+                </controls:DockPanel>
+            </Border>
+        <Border Grid.Row="1" Grid.Column="0"
+                Background="{ThemeResource ButtonBackground}"
+                BorderBrush="{ThemeResource ButtonBorderBrush}"
+                Margin="0, 8, 0, 0"
+                BorderThickness="1"
+                CornerRadius="4"
+                VerticalAlignment="Top"
+                HorizontalAlignment="Stretch"
+                PointerEntered="HoverOnButtonBorder"
+                PointerExited="HoverOffButtonBorder">
+            <controls:DockPanel LastChildFill="True">
+                <StackPanel Orientation="Horizontal" controls:DockPanel.Dock="Left">
+                    <PersonPicture HorizontalAlignment="Center" Margin="5, 0, 5, 0" 
+                                   Background="Transparent" 
+                                   ProfilePicture="https://learn.microsoft.com/windows/uwp/contacts-and-calendar/images/shoulder-tap-static-payload.png" />
+                    <StackPanel Orientation="Vertical">
+                        <TextBlock Text="Hello User" Margin="10,0,0,0"/>
+                        <TextBlock Text="User's Name" Margin="10,0,0,0"
+                                   Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"
+                                   FontSize="12"/>
+                    </StackPanel>
+                </StackPanel>
+            </controls:DockPanel>
+        </Border>
+        <Border Grid.Row="1" Grid.Column="1"
+                Background="{ThemeResource ButtonBackground}"
+                BorderBrush="{ThemeResource ButtonBorderBrush}"
+                Margin="8, 8, 0, 0"
+                BorderThickness="1"
+                CornerRadius="4"
+                VerticalAlignment="Top"
+                HorizontalAlignment="Stretch"
+                PointerEntered="HoverOnButtonBorder"
+                PointerExited="HoverOffButtonBorder">
+            <controls:DockPanel LastChildFill="True">
+                <StackPanel Orientation="Horizontal" controls:DockPanel.Dock="Left">
+                    <PersonPicture HorizontalAlignment="Center" Margin="5, 0, 5, 0" 
+                                   Background="Transparent" 
+                                   ProfilePicture="https://learn.microsoft.com/windows/uwp/contacts-and-calendar/images/shoulder-tap-static-payload.png" />
+                    <StackPanel Orientation="Vertical">
+                        <TextBlock Text="Hello User" Margin="10,0,0,0"/>
+                        <TextBlock Text="User's Name" Margin="10,0,0,0"
+                                   Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"
+                                   FontSize="12"/>
+                    </StackPanel>
+                </StackPanel>
+            </controls:DockPanel>
+        </Border>
+        <Border Grid.Row="1" Grid.Column="2"
+                Background="{ThemeResource ButtonBackground}"
+                BorderBrush="{ThemeResource ButtonBorderBrush}"
+                Margin="8, 8, 0, 0"
+                BorderThickness="1"
+                CornerRadius="4"
+                VerticalAlignment="Top"
+                HorizontalAlignment="Stretch"
+                PointerEntered="HoverOnButtonBorder"
+                PointerExited="HoverOffButtonBorder">
+            <controls:DockPanel LastChildFill="True">
+                <StackPanel Orientation="Horizontal" controls:DockPanel.Dock="Left">
+                    <PersonPicture HorizontalAlignment="Center" Margin="5, 0, 5, 0" 
+                                   Background="Transparent" 
+                                   ProfilePicture="https://learn.microsoft.com/windows/uwp/contacts-and-calendar/images/shoulder-tap-static-payload.png" />
+                    <StackPanel Orientation="Vertical">
+                        <TextBlock Text="Hello User" Margin="10,0,0,0"/>
+                        <TextBlock Text="User's Name" Margin="10,0,0,0"
+                                   Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"
+                                   FontSize="12"/>
+                    </StackPanel>
+                </StackPanel>
+            </controls:DockPanel>
+        </Border>
+    </Grid>
+</Page>
